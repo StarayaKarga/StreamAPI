@@ -1,0 +1,86 @@
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class OldApproachUtil {
+    public static List<Specialist> getSpecialist(){
+        return List.of(
+                new Specialist("Ivan Ivanov", new BigDecimal(5000), Specialty.ENGINEER),
+                new Specialist("Alexandr Alexandrov", new BigDecimal(4000), Specialty.ENGINEER),
+                new Specialist("Sergey Sergeev", new BigDecimal(3000), Specialty.DEVOPS),
+                new Specialist("Fedor Fedorov", new BigDecimal(2000), Specialty.DEVOPS),
+                new Specialist("Kirill Kirillov", new BigDecimal(10000), Specialty.MANAGER),
+                new Specialist("Petr Petrov", new BigDecimal(10000), Specialty.MANAGER)
+        );
+    }
+
+    //Поиск по специальности
+    public static List<Specialist> filterBySpecialty(List<Specialist> specialists, Specialty specialty){
+        List<Specialist> result = new ArrayList<>();
+        for (int i = 0; i < specialists.size(); i++) {
+            if (specialists.get(i).getSpecialty().equals(specialty)){
+                result.add(specialists.get(i));
+            }
+        }
+        return result;
+    }
+
+    //Проверка совпадений все инженеры
+    public static boolean matchAllEngineers(List<Specialist> specialists){
+        for (int i = 0; i < specialists.size(); i++) {
+            if (!specialists.get(i).getSpecialty().equals(Specialty.ENGINEER)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //Проверка совпадений - есть ли инженеры
+    public static boolean matchAnyEngineer(List<Specialist> specialists){
+        for (int i = 0; i < specialists.size(); i++) {
+            if (specialists.get(i).getSpecialty().equals(Specialty.ENGINEER)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //Проверка совпадений - все ли имеют ЗП выше указаной
+    public static boolean matchAllSalaryMoreThen(List<Specialist> specialists, BigDecimal salary){
+        for (int i = 0; i < specialists.size(); i++) {
+            if (specialists.get(i).getSalary().compareTo(salary) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean matchNoneSalaryMoreThen(List<Specialist> specialists, BigDecimal salary){
+        for (int i = 0; i < specialists.size(); i++) {
+            if (specialists.get(i).getSalary().compareTo(salary) > 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //Вывод в консоль
+    public static void printSpecialist(List<Specialist> specialists){
+        specialists.forEach(System.out::println);
+    }
+
+    //Групировка по специалистов специальности
+    public static Map<Specialty, List<Specialist>> groupBySpecialty(List<Specialist> specialists){
+        Map<Specialty, List<Specialist>> result = new HashMap<>();
+        Specialty[] specialties = Specialty.class.getEnumConstants();
+        for (int i = 0; i < specialties.length; i++) {
+            result.put(specialties[i], new ArrayList<>());
+        }
+
+        /// ... many many many redundant code ...
+
+        return result;
+    }
+}
